@@ -1,4 +1,3 @@
-devtools::install_github("davidallen02/pamngr")
 library(magrittr)
 
 pamngr::get_data("pce defy") %>%
