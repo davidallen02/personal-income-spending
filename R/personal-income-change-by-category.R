@@ -16,12 +16,12 @@ dat <- pamngr::join_sheets(c("piwgtotl",
   ) %>%
   dplyr::select(-pioctran, -piocxgsi) %>%
   magrittr::set_colnames(c("dates",
-                           "Employee Compensation", 
+                           "Employee\nCompensation", 
                            "Proprietors Income",
                            "Rental Income",
                            "Interest Income",
                            "Dividend Income",
-                           "Net Government Transfers")) %>%
+                           "Net Government\nTransfers")) %>%
   dplyr::slice_max(dates, n = 1) %>%
   reshape2::melt(id.vars = "dates")
 
