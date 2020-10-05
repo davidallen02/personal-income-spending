@@ -1,3 +1,5 @@
+library(magrittr)
+
 goods <- pamngr::join_sheets(c("uspxmvpa",
                                "uspxfadh",
                                "uspxrgav",
@@ -44,7 +46,7 @@ services <- pamngr::join_sheets(c("uspxhaut",
 
 dat <- goods %>%
   dplyr::bind_rows(services) %>%
-  pamngr::pchange(k = 7) %>%
+  pamngr::pchange(k = 1) %>%
   dplyr::slice_max(dates, n =1) %>%
   dplyr::arrange(value) %>%
   dplyr::mutate(
@@ -55,7 +57,7 @@ p <- dat %>%
   pamngr::barplot(x = "variable", y = "value", fill = "type") %>%
   pamngr::pam_plot(
     plot_title = "Personal Spending",
-    plot_subtitle = "Percent Change Since December 2019"
+    plot_subtitle = "Monthly Percent Change"
   )
 
 p <- p + ggplot2::coord_flip()
