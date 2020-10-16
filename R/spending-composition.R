@@ -1,5 +1,12 @@
 library(magrittr)
 
+dat <- pamngr::join_sheets(c("pce-drbl", "uspxmvpa", "uspxfadh", "uspxrgav", "uspxodrg",
+                             "pce-ndrb", "uspxfbof", "uspxclaf", "uspxgaog", "uspxondg",
+                             "pce-srv", "uspxhaut", "uspxhelc", "uspxtrso", "uspxrcrs",
+                             "uspxfoae", "uspxfsvi", "uspxosvc")) 
+
+# Goods vs Services -----------------------------------------------------------------
+
 
 
 dat <- pamngr::join_sheets(c("pce-drbl", "pce-ndrb","uspxhaut", "uspxhelc", "uspxtrso",
