@@ -1,3 +1,5 @@
+library(magrittr)
+
 dat <-pamngr::join_sheets(c("pidss", "pidsdi")) %>%
   dplyr::mutate(savings_rate = pidss/pidsdi * 100) %>%
   dplyr::select(dates, savings_rate) %>%
