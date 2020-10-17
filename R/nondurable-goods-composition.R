@@ -12,27 +12,27 @@ key <- pamngr::get_data("key") %>%
       stringr::str_remove("US Personal Consumption Expenditures ") %>%
       stringr::str_remove(" Nominal Dollars SAAR") %>%
       stringr::str_remove("US PCE ") %>%
-      stringr::str_remove(" SAAR")
+      stringr::str_remove(" SAAR") %>%
+      stringr::str_replace("Durable Household", "Durable\nHoushold") %>%
+      stringr::str_replace("Purchased For", "Purchased\nFor")
   ) %>%
   dplyr::select(security, label)
 
 dat <- dat %>% 
   dplyr::slice_max(dates, n = 60) %>%
   tidyr::pivot_longer(cols = -dates, names_to = "security") %>%
-  dplyr::left_join(key, by = "security")
+  dplyr::left_join(key, by = "security") %>% 
+  dplyr::filter(security %in% c("uspxfbof", "uspxclaf", "uspxgaog", "uspxondg"))
 
-dat1 <- dat %>% dplyr::filter(security %in% c("pce-drbl", "pce-ndrb", "pce-srv"))
-
-p1 <- ggplot2::ggplot(dat1, ggplot2::aes(dates, value, fill = label)) +
+p <- ggplot2::ggplot(dat, ggplot2::aes(dates, value, fill = label)) +
   ggplot2::geom_area() +
-  ggplot2::scale_fill_manual(values = pamngr::pam.pal()) 
+  ggplot2::scale_fill_manual(values = c("#788502", "#9da44c", "#c2c485", "#e5e5be")) +
+  ggplot2::guides(fill = ggplot2::guide_legend(nrow = 3))
 
-p <- p1 %>%
+p <- p %>%
   pamngr::pam_plot(
-    plot_title = "Personal Spending Composition",
+    plot_title = "Nondurable Goods Composition",
     plot_subtitle = "SAAR, USD Billions"
   )
 
-p %>% pamngr::all_output("spending-composition")
-
-
+p %>% pamngr::all_output("nondurable-goods-composition")
