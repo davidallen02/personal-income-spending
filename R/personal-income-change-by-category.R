@@ -1,3 +1,5 @@
+library(magrittr)
+
 dat <- pamngr::join_sheets(c("piwgtotl",
                       "piocprop",
                       "piocrent",
@@ -23,12 +25,13 @@ dat <- pamngr::join_sheets(c("piwgtotl",
                            "Dividend Income",
                            "Net Government\nTransfers")) %>%
   dplyr::slice_max(dates, n = 1) %>%
-  reshape2::melt(id.vars = "dates")
+  reshape2::melt(id.vars = "dates") %>%
+  dplyr::mutate(foo = "foo")
 
 plot_date <- dat %>% dplyr::select(dates) %>% unique() %>% dplyr::pull() %>% format("%B %Y,")
 
 p <- dat %>% 
-  pamngr::barplot(x = "variable", y = "value", fill = "variable") %>%
+  pamngr::barplot(x = "variable", y = "value", fill = "foo") %>%
   pamngr::pam_plot(
     plot_title = "Change in Personal Income",
     plot_subtitle = paste(plot_date, "Billions of USD"),
