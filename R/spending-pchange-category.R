@@ -53,11 +53,13 @@ dat <- goods %>%
     variable = variable %>% factor(levels = variable)
   )
 
+period <- dat %>% dplyr::select(dates) %>% dplyr::pull() %>% unique() %>% format("%B %Y")
+
 p <- dat %>%
   pamngr::barplot(x = "variable", y = "value", fill = "type") %>%
   pamngr::pam_plot(
     plot_title = "Personal Spending",
-    plot_subtitle = "Monthly Percent Change"
+    plot_subtitle = paste0("Monthly Percent Change, ", period)
   )
 
 p <- p + ggplot2::coord_flip()
